@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Itinerary</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+
+<style>
+  body {
+    background: url('files/1.jpg') no-repeat center center fixed;
+    background-size: cover;
+  }
+
+  @font-face {
+    font-family: 'MyCustomFont';
+    src: url('font/Stardew_Valley.ttf') format('truetype'),
+      url('font/Stardew_Valley.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  .card-title {
+    font-family: 'MyCustomFont', sans-serif;
+    font-size: 22px;
+  }
+
+  .card-text {
+    font-family: 'MyCustomFont', sans-serif;
+    font-size: 16px;
+  }
+
+  .image-container {
+    position: relative;
+    width: 1000px;
+    /* Match the width of the image */
+    height: auto;
+  }
+
+  #frameImage {
+    position: absolute;
+    top: -10px;
+    /* Adjust vertical position */
+    left: -10px;
+    /* Adjust horizontal position */
+    width: 102%;
+    /* Or adjust to specific size */
+    height: 105%;
+    z-index: 0;
+  }
+
+
+
+  #stardewImage {
+    position: relative;
+    z-index: 1;
+    /* Keep the main image in front of the frame */
+    width: 100%;
+    height: auto;
+  }
+
+
+
+  #fontImage {
+    width: 1000px;
+    height: auto;
+  }
+</style>
+
+<body>
+
+  <!-- Display the Font Image (Font Example) -->
+  <div class="d-flex justify-content-center p-4">
+    <img id="fontImage" src="files/font.png" class="rounded-md" />
+  </div>
+
+  <!-- Display Image with Frame -->
+  <div class="d-flex justify-content-center p-4">
+    <div class="image-container">
+      <img id="frameImage" src="files/frames.png" alt="Frame" />
+      <img id="stardewImage" src="files/stardew_us.png" class="rounded-md" />
+    </div>
+  </div>
+
+
+
+  <!-- Cards Section -->
+  <div class="container">
+    <div class="d-flex justify-content-center flex-wrap gap-3">
+      <div class="card" style="width: 18rem;">
+        <img src="files/pinto.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title"><strong>Pintô Art Museum</strong></h5>
+          <p class="card-text">Pintô Art Museum is an exhibition space and contemporary museum located in the
+            Philippines
+            historic pilgrimage city of Antipolo outside of Manila. <br> <strong>Entrance Fee: 125php Student</strong>
+          </p>
+          <a href="https://www.pintoart.org/museum/" class="btn btn-primary">Click me!</a>
+        </div>
+      </div>
+      <div class="card" style="width: 18rem;">
+        <img src="files/tyvo.jpg" class="card-img-top">
+        <div class="card-body">
+          <h5 class="card-title"><strong>Tyvo Overlooking Grill & Cafe Antipolo</strong></h5>
+          <p class="card-text">Alfresco dining with an incredible overlooking view of Metro Manila and Laguna de Bay.
+          </p>
+          <a href="https://www.tiktok.com/@ugcpepay/video/7378117939670584584" class="btn btn-primary">Click me!!</a>
+        </div>
+      </div>
+      <div class="card" style="width: 18rem;">
+        <img src="files/cloud9.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title"><strong>Cloud 9 360° View</strong></h5>
+          <p class="card-text">A panoramic view of the surrounding area including the Metro manila cityscape in the
+            distance and an unforgettable sunset.
+            A thrilling hanging bridge leads to the viewing platform. <br><strong>Entrance Fee: 100php</strong> </br>
+          </p>
+          <a href="https://www.tiktok.com/@dayanaraalviar.vlogs/video/7351643177608285446?q=cloud%209%20antipolo&t=1738592498134"
+            class="btn btn-primary">Click me!!</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Single Card -->
+  <div class="container d-flex justify-content-center p-4">
+    <div class="card" style="width: 18rem;">
+      <img src="files/blessie.jpg" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title text-center">What to bring?</h5>
+        <p class="card-text text-center">You! 'Cuz you're the only one I need ❤️</p>
+        <div class="text-center">
+          <a href="https://www.canva.com/design/DAGeDolWdag/qcgkjwQvk5WV1JwvuZ7X3A/view?utm_content=DAGeDolWdag&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hdccd43a334"
+            class="btn btn-primary">:3</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- Background Music -->
+  <audio id="bgMusic" autoplay loop>
+    <source src="files/music_bg.mp3" type="audio/mpeg">
+    Your browser does not support the audio tag.
+  </audio>
+
+  <audio id="clickSound">
+    <source src="files/stardew_click.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+
+    const clickSound = document.getElementById("clickSound");
+
+    document.addEventListener("mousedown", function (event) {
+      if (event.button === 0) {
+        clickSound.currentTime = 0;
+        clickSound.play();
+      }
+    });
+  </script>
+
+  <script>
+    // Adjust volume (0.0 to 1.0)
+    document.getElementById("bgMusic").volume = 0.1; // Set volume to 10%
+  </script>
+
+</body>
+
+</html>

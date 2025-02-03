@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will you be my Valentine?</title>
+
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<style>
+    body {
+        margin: 0;
+        overflow: hidden;
+        background-color: #ffeff5;
+    }
+
+    canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    #heartCanvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        /* Allows clicks to pass through */
+        z-index: -1;
+        /* Keeps it in the background */
+    }
+</style>
+
+
+<body>
+
+    <canvas id="heartCanvas"></canvas>
+
+
+    <div class="flex items-center justify-center h-screen">
+        <div class="flex flex-row items-center p-4 space-x-6">
+            <!-- Left side text -->
+            <div id="leftText" class="text-2xl font-semibold text-gray-700 w-1/3 hidden">
+                💖 You made the right choice! Here's the plan! We are going to Antipolo! --> 💖
+            </div>
+
+
+            <!-- Main Content -->
+            <div class="flex flex-col items-center p-4">
+                <img id="imageDisplay" src="files/image.jpg" class="rounded-md h-[300px]" style="object-fit: cover;" />
+                <h2 id="valentineQuestion" class="text-4xl font-bold italic text-[#db5a8e] my-4">
+                    Love, Will you be my valentine for Feb. 14?
+                </h2>
+                <div class="flex gap-4 pt-[20px] items-center" id="responseButtons">
+                    <button id="yesBtn"
+                        class="bounce2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-[20px] font-medium disabled:pointer-events-none disabled:opacity-50 hover:bg-green-400 min-h-12 min-w-[75px] px-4 py-2 bg-green-500 text-white transition">
+                        Yes
+                    </button>
+                    <button id="noBtn"
+                        class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-[20px] font-medium transition disabled:pointer-events-none disabled:opacity-50 hover:bg-red-700 h-12 min-w-[75px] w-auto px-4 py-2 bg-red-500 text-white">
+                        No
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="module">
+
+        import confetti from 'https://cdn.skypack.dev/canvas-confetti';
+
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const imageDisplay = document.getElementById('imageDisplay');
+        const valentineQuestion = document.getElementById('valentineQuestion');
+        const responseButtons = document.getElementById('responseButtons');
+        const leftText = document.getElementById('leftText');
+
+        let noClickCount = 0;
+        let buttonHeight = 48;
+        let buttonWidth = 80;
+        let fontSize = 20;
+        const imagePaths = [
+            "files/image.jpg",
+            "files/image(2).jpg",
+            "files/image3.jpg",
+            "files/image4.jpg",
+            "files/image5.jpg",
+
+        ];
+
+
+        noBtn.addEventListener('click', function () {
+            if (noClickCount < 4) {
+                noClickCount++;
+                imageDisplay.src = imagePaths[noClickCount];
+                buttonHeight += 35;
+                buttonWidth += 35;
+                fontSize += 25;
+                yesBtn.style.height = `${buttonHeight}px`;
+                yesBtn.style.width = `${buttonWidth}px`;
+                yesBtn.style.fontSize = `${fontSize}px`;
+                if (noClickCount < 5) {
+                    noBtn.textContent = ["No", "Are you sure?", "Please bby!! ;-;", "No!! don't click this button!!", "No!!"][noClickCount];
+                }
+            }
+        });
+
+
+
+        yesBtn.addEventListener('click', () => {
+            imageDisplay.src = 'files/antipolo.png';
+            valentineQuestion.textContent = "Yayyy!! :3";
+            responseButtons.style.display = 'none';
+            confetti();
+
+            // Show the left side text
+            leftText.style.display = "block";
+
+            // Create a new button
+            const newButton = document.createElement('button');
+            newButton.textContent = "Click to see the Itinerary!";
+            newButton.classList.add("bg-blue-500", "text-white", "px-4", "py-2", "rounded", "mt-4", "hover:bg-blue-600");
+
+            // Append the new button inside the same container
+            const container = document.querySelector('.flex.flex-col.items-center');
+            container.appendChild(newButton);
+
+            // Add click event to the new button
+            newButton.addEventListener('click', () => {
+                window.location.href = "date.html";
+            });
+        });
+    </script>
+
+
+
+    <audio id="clickSound">
+        <source src="files/stardew_click.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <audio id="sound">
+        <source src="files/yay.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+
+        const clickSound = document.getElementById("clickSound");
+
+        const sound = document.getElementById('sound');
+
+
+        yesBtn.addEventListener('click', () => {
+
+            sound.play();
+        });
+
+        document.addEventListener("mousedown", function (event) {
+            if (event.button === 0) {
+                clickSound.currentTime = 0;
+                clickSound.play();
+            }
+        });
+    </script>
+
+    <script>
+        const canvas = document.getElementById('heartCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const hearts = [];
+
+        function createHeart() {
+            return {
+                x: Math.random() * canvas.width,
+                y: -10,
+                size: Math.random() * 20 + 5,
+                speed: Math.random() * 3 + 1,
+                angle: Math.random() * Math.PI * 2,
+                spin: (Math.random() - 0.5) * 0.1,
+                opacity: 1  // Opacity for fade effect
+            };
+        }
+
+        function drawHeart(heart) {
+            ctx.fillStyle = `rgba(255, 0, 0, ${heart.opacity})`;
+            ctx.beginPath();
+            ctx.moveTo(heart.x, heart.y);
+            ctx.bezierCurveTo(
+                heart.x - heart.size, heart.y - heart.size,
+                heart.x - heart.size * 1.5, heart.y + heart.size / 3,
+                heart.x, heart.y + heart.size
+            );
+            ctx.bezierCurveTo(
+                heart.x + heart.size * 1.5, heart.y + heart.size / 3,
+                heart.x + heart.size, heart.y - heart.size,
+                heart.x, heart.y
+            );
+            ctx.fill();
+        }
+
+        function updateHearts() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (Math.random() < 0.3) {
+                hearts.push(createHeart());
+            }
+
+            for (let i = hearts.length - 1; i >= 0; i--) {
+                let heart = hearts[i];
+                heart.y += heart.speed;
+                heart.angle += heart.spin;
+                heart.opacity -= 0.005; // Slowly fade out
+                drawHeart(heart);
+
+                // Remove heart when it fully fades
+                if (heart.opacity <= 0) {
+                    hearts.splice(i, 1);
+                }
+            }
+
+            requestAnimationFrame(updateHearts);
+        }
+
+        updateHearts();
+
+        // Resize canvas dynamically
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+    </script>
+    <audio id="bgMusic" autoplay loop>
+        <source src="files/stardew2.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag.
+    </audio>
+
+    <script>
+        // Adjust volume (0.0 to 1.0)
+        document.getElementById("bgMusic").volume = 0.1; // Set volume to 10%
+    </script>
+
+</body>
+
+</html>
